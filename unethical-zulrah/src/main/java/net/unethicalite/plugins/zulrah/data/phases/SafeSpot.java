@@ -6,8 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-public enum SafeSpot
-{
+public enum SafeSpot {
     NORTH_EAST(6, 9),
     NORTH_WEST(-4, 10),
     WEST(-4, 4),

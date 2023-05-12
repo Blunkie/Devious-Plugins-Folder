@@ -13,21 +13,16 @@ import net.unethicalite.plugins.zulrah.data.phases.ZulrahCycle;
 
 @Getter
 @Setter
-public abstract class ZulrahTask extends SessionUpdater implements Task
-{
+public abstract class ZulrahTask extends SessionUpdater implements Task {
     private ZulrahCycle zulrahCycle;
     private WorldPoint origin;
 
-    protected boolean isCloud(WorldPoint position)
-    {
+    protected boolean isCloud(WorldPoint position) {
         for (TileObject cloud : TileObjects.getSurrounding(
-                Players.getLocal().getWorldLocation(), 10, 11700))
-        {
-            if (cloud instanceof GameObject)
-            {
+                Players.getLocal().getWorldLocation(), 10, 11700)) {
+            if (cloud instanceof GameObject) {
                 WorldArea area = ((GameObject) cloud).getWorldArea();
-                if (area.contains(position))
-                {
+                if (area.contains(position)) {
                     return true;
                 }
             }
@@ -36,8 +31,7 @@ public abstract class ZulrahTask extends SessionUpdater implements Task
         return false;
     }
 
-    protected boolean inCloud()
-    {
+    protected boolean inCloud() {
         return isCloud(Players.getLocal().getWorldLocation());
     }
 }

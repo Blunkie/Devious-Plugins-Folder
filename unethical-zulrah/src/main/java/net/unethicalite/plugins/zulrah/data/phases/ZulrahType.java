@@ -9,8 +9,7 @@ import net.unethicalite.plugins.zulrah.data.GearSetup;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @Getter
-public enum ZulrahType
-{
+public enum ZulrahType {
     RANGE(2042),
     MELEE(2043),
     MAGIC(2044),
@@ -25,8 +24,7 @@ public enum ZulrahType
     @Setter
     private GearSetup setup;
 
-    public static void setRangedMeleePhaseGear(GearSetup gearSetup)
-    {
+    public static void setRangedMeleePhaseGear(GearSetup gearSetup) {
         RANGE.setSetup(gearSetup);
         MELEE.setSetup(gearSetup);
         JAD_MAGIC_FIRST.setSetup(gearSetup);
@@ -34,31 +32,25 @@ public enum ZulrahType
         magePray = Prayer.MYSTIC_MIGHT;
     }
 
-    public static void setMagePhaseGear(GearSetup gearSetup, boolean useRigour)
-    {
+    public static void setMagePhaseGear(GearSetup gearSetup, boolean useRigour) {
         MAGIC.setSetup(gearSetup);
         rangePray = useRigour ? Prayer.RIGOUR : Prayer.EAGLE_EYE;
     }
 
-    public int id()
-    {
+    public int id() {
         return id;
     }
 
-    public Prayer getOffensivePrayer()
-    {
-        if (this == ZulrahType.MAGIC)
-        {
+    public Prayer getOffensivePrayer() {
+        if (this == ZulrahType.MAGIC) {
             return rangePray;
         }
 
         return magePray;
     }
 
-    public Prayer getDefensivePrayer()
-    {
-        switch (this)
-        {
+    public Prayer getDefensivePrayer() {
+        switch (this) {
             case MAGIC:
             case JAD_MAGIC_FIRST:
                 return Prayer.PROTECT_FROM_MAGIC;

@@ -8,11 +8,9 @@ import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.plugins.Task;
 
-public class ChipEssence extends SessionUpdater implements Task
-{
+public class ChipEssence extends SessionUpdater implements Task {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         return Inventory.isFull()
                 && !Inventory.contains(c -> c.getName().equalsIgnoreCase(Constants.EssenceFragments))
                 || (!Inventory.contains(c -> c.getName().equalsIgnoreCase(Constants.EssenceFragments))
@@ -21,21 +19,17 @@ public class ChipEssence extends SessionUpdater implements Task
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         getSession().setCurrentTask("Chipping essence");
 
         Item chisel = Inventory.getFirst(c -> c.getName().equalsIgnoreCase("Chisel"));
-        if (chisel == null)
-        {
+        if (chisel == null) {
             return 600;
         }
 
-        while (Inventory.contains(c -> c.getName().equalsIgnoreCase(Constants.DarkEssenceBlock)))
-        {
+        while (Inventory.contains(c -> c.getName().equalsIgnoreCase(Constants.DarkEssenceBlock))) {
             Item darkEssenceBlock = Inventory.getFirst(c -> c.getName().equalsIgnoreCase(Constants.DarkEssenceBlock));
-            if (darkEssenceBlock == null)
-            {
+            if (darkEssenceBlock == null) {
                 return 600;
             }
 

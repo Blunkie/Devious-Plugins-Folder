@@ -10,11 +10,9 @@ import net.unethicalite.api.magic.SpellBook;
 import net.unethicalite.api.plugins.Task;
 import net.unethicalite.client.Static;
 
-public class TeleportToHouse extends SessionUpdater implements Task
-{
+public class TeleportToHouse extends SessionUpdater implements Task {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         return Inventory.contains(ItemIds.STEELBAR)
                 && Inventory.contains("Law rune")
                 && Equipment.contains("Dust battlestaff")
@@ -22,8 +20,7 @@ public class TeleportToHouse extends SessionUpdater implements Task
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         getSession().setCurrentTask("Teleport to house");
 
         Spell teleport = SpellBook.Standard.TELEPORT_TO_HOUSE;

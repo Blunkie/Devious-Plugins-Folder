@@ -9,11 +9,9 @@ import net.unethicalite.api.items.Bank;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.plugins.Task;
 
-public class OpenBank extends SessionUpdater implements Task
-{
+public class OpenBank extends SessionUpdater implements Task {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         return TileObjects.getNearest(c -> c.hasAction("Use")) != null
                 && !Inventory.contains("Steel bar")
                 && !Bank.isOpen()
@@ -21,17 +19,14 @@ public class OpenBank extends SessionUpdater implements Task
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         getSession().setCurrentTask("Opening bank");
         TileObject bankChest = TileObjects.getNearest(c -> c.hasAction("Use"));
-        if (bankChest == null)
-        {
+        if (bankChest == null) {
             return 300;
         }
 
-        if (!Bank.isOpen())
-        {
+        if (!Bank.isOpen()) {
             bankChest.interact("Use");
             return 600;
         }

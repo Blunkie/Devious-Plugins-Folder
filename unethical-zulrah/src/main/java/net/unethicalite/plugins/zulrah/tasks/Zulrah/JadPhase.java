@@ -7,27 +7,18 @@ import net.unethicalite.api.widgets.Prayers;
 import net.unethicalite.plugins.zulrah.data.Constants;
 import net.unethicalite.plugins.zulrah.framework.ZulrahTask;
 
-public class JadPhase extends ZulrahTask
-{
+public class JadPhase extends ZulrahTask {
     private Prayer current;
 
     @Override
-    public boolean validate()
-    {
-        if (getZulrahCycle() != null && getZulrahCycle().isJad())
-        {
-            if (Projectiles.getAll(e -> e.getId() == Constants.PROJECTILE_RANGED_ID).size() > 0 && !Prayers.isEnabled(Prayer.PROTECT_FROM_MAGIC))
-            {
+    public boolean validate() {
+        if (getZulrahCycle() != null && getZulrahCycle().isJad()) {
+            if (Projectiles.getAll(e -> e.getId() == Constants.PROJECTILE_RANGED_ID).size() > 0 && !Prayers.isEnabled(Prayer.PROTECT_FROM_MAGIC)) {
                 return true;
-            }
-            else if (Projectiles.getAll(e -> e.getId() == Constants.PROJECTILE_MAGE_ID).size() > 0 && !Prayers.isEnabled(Prayer.PROTECT_FROM_MISSILES))
-            {
+            } else if (Projectiles.getAll(e -> e.getId() == Constants.PROJECTILE_MAGE_ID).size() > 0 && !Prayers.isEnabled(Prayer.PROTECT_FROM_MISSILES)) {
                 return true;
-            }
-            else return current == null;
-        }
-        else
-        {
+            } else return current == null;
+        } else {
             current = null;
         }
 
@@ -35,33 +26,27 @@ public class JadPhase extends ZulrahTask
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         updateTask("Jad phase");
 
-        if (current == null)
-        {
+        if (current == null) {
             current = getZulrahCycle().getZulrahType().getDefensivePrayer();
         }
 
-        if (!Prayers.isEnabled(getZulrahCycle().getZulrahType().getOffensivePrayer()))
-        {
+        if (!Prayers.isEnabled(getZulrahCycle().getZulrahType().getOffensivePrayer())) {
             Prayers.toggle(getZulrahCycle().getZulrahType().getOffensivePrayer());
             Time.sleepUntil(() -> Prayers.isEnabled(getZulrahCycle().getZulrahType().getOffensivePrayer()), 500);
         }
 
-        if (Projectiles.getAll(e -> e.getId() == Constants.PROJECTILE_RANGED_ID).size() > 0)
-        {
+        if (Projectiles.getAll(e -> e.getId() == Constants.PROJECTILE_RANGED_ID).size() > 0) {
             current = Prayer.PROTECT_FROM_MAGIC;
         }
 
-        if (Projectiles.getAll(e -> e.getId() == Constants.PROJECTILE_MAGE_ID).size() > 0)
-        {
+        if (Projectiles.getAll(e -> e.getId() == Constants.PROJECTILE_MAGE_ID).size() > 0) {
             current = Prayer.PROTECT_FROM_MISSILES;
         }
 
-        if (!Prayers.isEnabled(current))
-        {
+        if (!Prayers.isEnabled(current)) {
             Prayers.toggle(current);
             Time.sleepUntil(() -> Prayers.isEnabled(current), 1000);
         }

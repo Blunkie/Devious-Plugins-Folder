@@ -9,13 +9,11 @@ import net.unethicalite.plugins.zulrah.UnethicalZulrahPlugin;
 import javax.inject.Inject;
 import java.awt.*;
 
-public class ZulrahStatsOverlay extends OverlayPanel
-{
+public class ZulrahStatsOverlay extends OverlayPanel {
     private final UnethicalZulrahPlugin plugin;
 
     @Inject
-    private ZulrahStatsOverlay(UnethicalZulrahPlugin plugin)
-    {
+    private ZulrahStatsOverlay(UnethicalZulrahPlugin plugin) {
         super(plugin);
         setPosition(OverlayPosition.TOP_LEFT);
         setPriority(OverlayPriority.LOW);
@@ -23,8 +21,7 @@ public class ZulrahStatsOverlay extends OverlayPanel
     }
 
     @Override
-    public Dimension render(Graphics2D graphics)
-    {
+    public Dimension render(Graphics2D graphics) {
         ZulrahSession session = plugin.getSession();
 
         panelComponent.getChildren().add(LineComponent.builder()

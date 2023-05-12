@@ -13,12 +13,10 @@ import net.unethicalite.api.magic.Spell;
 import net.unethicalite.api.magic.SpellBook;
 import net.unethicalite.api.plugins.Task;
 
-public class TeleportToCamelot extends SessionUpdater implements Task
-{
+public class TeleportToCamelot extends SessionUpdater implements Task {
 
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         boolean playerAtGe = Locations.GE_CENTER.contains(LocalPlayer.get());
         boolean restockDone = BotMemory.getBool(MemoryConstants.BL_NEEDS_RESTOCK) == false;
 
@@ -28,15 +26,12 @@ public class TeleportToCamelot extends SessionUpdater implements Task
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         getSession().setCurrentTask("Teleport to camelot");
 
-        if (!Bank.isOpen())
-        {
+        if (!Bank.isOpen()) {
             NPC banker = NPCs.getNearest(c -> c.hasAction("Bank"));
-            if (banker != null)
-            {
+            if (banker != null) {
                 banker.interact("Bank");
             }
             return 600;

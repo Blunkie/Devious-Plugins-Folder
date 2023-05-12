@@ -15,15 +15,13 @@ import net.unethicalite.plugins.zulrah.data.Constants;
 import net.unethicalite.plugins.zulrah.data.phases.ZulrahType;
 import net.unethicalite.plugins.zulrah.framework.ZulrahTask;
 
-public class Eating extends ZulrahTask
-{
+public class Eating extends ZulrahTask {
     private Item food;
     private Item karambwan;
     private NPC zulrah;
 
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         food = Inventory.getFirst(x -> !x.getName().equals(Constants.KARAMBWAN) && x.hasAction(Constants.EAT_ACTION));
         karambwan = Inventory.getFirst(x -> x.hasAction(Constants.EAT_ACTION) && x.getName().equals(Constants.KARAMBWAN));
         zulrah = NPCs.getNearest(x -> x.getName().equals(Constants.ZULRAH_NAME));
@@ -31,8 +29,7 @@ public class Eating extends ZulrahTask
         return canTickEat() || canEatInBetweenSpawns() || (food == null && canEat());
     }
 
-    private boolean canEat()
-    {
+    private boolean canEat() {
         return getZulrahCycle() != null
                 && karambwan != null
                 && ((getZulrahCycle().isMagic() || food == null)
@@ -40,8 +37,7 @@ public class Eating extends ZulrahTask
                 && Combat.getCurrentHealth() < 60);
     }
 
-    private boolean canTickEat()
-    {
+    private boolean canTickEat() {
         return (UnethicalZulrahPlugin.atZulrah()
                 && getZulrahCycle() != null)
                 && (karambwan != null
@@ -53,8 +49,7 @@ public class Eating extends ZulrahTask
                 && Combat.getCurrentHealth() <= Constants.MAX_HIT)));
     }
 
-    private boolean canEatInBetweenSpawns()
-    {
+    private boolean canEatInBetweenSpawns() {
         return Combat.getCurrentHealth() <= Skills.getLevel(Skill.HITPOINTS) - 20
                 && zulrah != null
                 && (zulrah.getAnimation() == Constants.DISAPPEAR_ANIMATION || zulrah.getAnimation() == Constants.APPEAR_ANIMATION)
@@ -62,26 +57,22 @@ public class Eating extends ZulrahTask
     }
 
     @Override
-    public int execute()
-    {
-        if (canTickEat())
-        {
+    public int execute() {
+        if (canTickEat()) {
             updateTask("Tick eating");
 
             karambwan.interact(Constants.EAT_ACTION);
             Time.sleep(250, 350);
         }
 
-        if (canEatInBetweenSpawns())
-        {
+        if (canEatInBetweenSpawns()) {
             updateTask("Eating in between spawns");
 
             karambwan.interact(Constants.EAT_ACTION);
             Time.sleep(250, 350);
         }
 
-        if (canEat())
-        {
+        if (canEat()) {
             updateTask("Eating");
 
             karambwan.interact(Constants.EAT_ACTION);
@@ -91,8 +82,7 @@ public class Eating extends ZulrahTask
     }
 
     @Override
-    public boolean isBlocking()
-    {
+    public boolean isBlocking() {
         return false;
     }
 }

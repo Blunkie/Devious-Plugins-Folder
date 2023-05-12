@@ -10,44 +10,36 @@ import net.unethicalite.api.plugins.Task;
 import net.unethicalite.api.widgets.Dialog;
 import net.unethicalite.client.Static;
 
-public class MakeClockwork extends SessionUpdater implements Task
-{
+public class MakeClockwork extends SessionUpdater implements Task {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         return Static.getClient().isInInstancedRegion() && Inventory.contains("Steel bar");
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         getSession().setCurrentTask("Making clockwork");
         TileObject bench = TileObjects.getNearest(c -> c.getName().startsWith("Clockmaker"));
-        if (bench == null)
-        {
+        if (bench == null) {
             return 600;
         }
 
-        if (bench.distanceTo(LocalPlayer.get()) > 2)
-        {
+        if (bench.distanceTo(LocalPlayer.get()) > 2) {
             bench.interact("Craft");
             Time.sleepUntil(() -> !LocalPlayer.get().isMoving(), 1800);
             return -1;
         }
 
-        if (Dialog.canContinue())
-        {
+        if (Dialog.canContinue()) {
             Dialog.continueSpace();
         }
 
-        if (Dialog.isOpen())
-        {
+        if (Dialog.isOpen()) {
             Dialog.chooseOption(1); // Make clockwork
             return 1200;
         }
 
-        if (LocalPlayer.get().getAnimation() == 4107)
-        {
+        if (LocalPlayer.get().getAnimation() == 4107) {
             bench.interact("Craft");
             return 600;
         }

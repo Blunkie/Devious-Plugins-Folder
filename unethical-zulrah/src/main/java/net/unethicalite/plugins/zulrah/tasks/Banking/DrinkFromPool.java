@@ -18,8 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
-public class DrinkFromPool extends SessionUpdater implements Task
-{
+public class DrinkFromPool extends SessionUpdater implements Task {
     List<String> ItemList = Arrays.asList(
             Constants.ANTIVENOM_POT + "(4)",
             Constants.PRAYER_POT + "(4)",
@@ -31,12 +30,9 @@ public class DrinkFromPool extends SessionUpdater implements Task
             Constants.RING_OF_RECOIL);
 
     @Override
-    public boolean validate()
-    {
-        for (String item : ItemList)
-        {
-            if (!Inventory.contains(item))
-            {
+    public boolean validate() {
+        for (String item : ItemList) {
+            if (!Inventory.contains(item)) {
                 return false;
             }
         }
@@ -51,14 +47,12 @@ public class DrinkFromPool extends SessionUpdater implements Task
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         log.info("Drinking from pool");
         updateTask("Drinking from pool");
 
         TileObject healPool = TileObjects.getNearest(c -> c.hasAction("Drink"));
-        if (healPool == null)
-        {
+        if (healPool == null) {
             log.warn("[DrinkFromPool] Unable to find health pool");
             return 600;
         }

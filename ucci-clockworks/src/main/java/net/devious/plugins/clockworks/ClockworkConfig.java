@@ -5,15 +5,13 @@ import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 
 @ConfigGroup("ClockworkPlugin")
-public interface ClockworkConfig extends Config
-{
+public interface ClockworkConfig extends Config {
     @ConfigItem(
             keyName = "pkWorld",
             name = "pkWorld",
             description = "pkWorld"
     )
-    default int pkWorld()
-    {
+    default int pkWorld() {
         return 560;
     }
 }

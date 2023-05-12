@@ -28,8 +28,7 @@ import javax.swing.*;
 @Extension
 @PluginDescriptor(name = "Ucci ZeahRc", enabledByDefault = false)
 @Slf4j
-public class ZeahRcPlugin extends TaskPlugin
-{
+public class ZeahRcPlugin extends TaskPlugin {
     @Inject
     private ZeahRcStatsOverlay statsOverlay;
 
@@ -44,20 +43,19 @@ public class ZeahRcPlugin extends TaskPlugin
 
     @SneakyThrows
     @Override
-    protected void startUp()
-    {
+    protected void startUp() {
         tasks = new Task[]
-        {
-                new ActivateEssence(),
-                new Sleep(),
-                new GoToRunestone(),
-                new MineEssence(),
-                new GoToDarkAltar(),
-                new UseDarkAltar(),
-                new ChipEssence(),
-                new GoToBloodAltar(),
-                new UseBloodAltar(),
-        };
+                {
+                        new ActivateEssence(),
+                        new Sleep(),
+                        new GoToRunestone(),
+                        new MineEssence(),
+                        new GoToDarkAltar(),
+                        new UseDarkAltar(),
+                        new ChipEssence(),
+                        new GoToBloodAltar(),
+                        new UseBloodAltar(),
+                };
 
         running = true;
         session = new ZeahRcSession();
@@ -65,10 +63,8 @@ public class ZeahRcPlugin extends TaskPlugin
 
         session.startTimer();
 
-        for (Task t : tasks)
-        {
-            if (t instanceof SessionUpdater)
-            {
+        for (Task t : tasks) {
+            if (t instanceof SessionUpdater) {
                 SessionUpdater sessionTask = (SessionUpdater) t;
                 sessionTask.setSession(this.getSession());
                 sessionTask.setPlugin(this);
@@ -79,18 +75,15 @@ public class ZeahRcPlugin extends TaskPlugin
     }
 
     @Override
-    public void stop()
-    {
+    public void stop() {
         running = false;
         session = new ZeahRcSession();
 
         overlayManager.remove(statsOverlay);
     }
 
-    public Task[] getTasks()
-    {
-        if (running)
-        {
+    public Task[] getTasks() {
+        if (running) {
             return tasks;
         }
 
@@ -98,26 +91,21 @@ public class ZeahRcPlugin extends TaskPlugin
     }
 
     @Subscribe
-    private void onGameStateChanged(GameStateChanged event)
-    {
-        if (event.getGameState() == GameState.LOGIN_SCREEN)
-        {
+    private void onGameStateChanged(GameStateChanged event) {
+        if (event.getGameState() == GameState.LOGIN_SCREEN) {
             SwingUtilities.invokeLater(() -> Plugins.stopPlugin(this));
         }
     }
 
     @Subscribe
-    private void onActorDeath(ActorDeath event)
-    {
-        if (event.getActor() == Players.getLocal())
-        {
+    private void onActorDeath(ActorDeath event) {
+        if (event.getActor() == Players.getLocal()) {
             SwingUtilities.invokeLater(() -> Plugins.stopPlugin(this));
         }
     }
 
 
-    public ZeahRcSession getSession()
-    {
+    public ZeahRcSession getSession() {
         return this.session;
     }
 }

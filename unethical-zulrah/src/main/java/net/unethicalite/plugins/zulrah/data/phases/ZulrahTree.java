@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class ZulrahTree
-{
+public class ZulrahTree {
     private final ZulrahNode root;
 }

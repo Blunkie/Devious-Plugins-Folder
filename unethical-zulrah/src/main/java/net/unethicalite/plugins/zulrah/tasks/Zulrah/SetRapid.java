@@ -10,14 +10,11 @@ import net.unethicalite.plugins.zulrah.data.Constants;
 import net.unethicalite.plugins.zulrah.data.phases.ZulrahCycle;
 import net.unethicalite.plugins.zulrah.framework.ZulrahTask;
 
-public class SetRapid extends ZulrahTask
-{
+public class SetRapid extends ZulrahTask {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         ZulrahCycle cycle = getZulrahCycle();
-        if (cycle == null)
-        {
+        if (cycle == null) {
             return false;
         }
 
@@ -30,20 +27,17 @@ public class SetRapid extends ZulrahTask
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         updateTask("Setting to rapid");
 
-        if (Combat.getAttackStyle() != Combat.AttackStyle.SECOND)
-        {
+        if (Combat.getAttackStyle() != Combat.AttackStyle.SECOND) {
             Combat.setAttackStyle(Combat.AttackStyle.SECOND);
         }
 
         Time.sleepUntil(() -> Combat.isSpecEnabled(), 600);
 
         NPC zulrah = NPCs.getNearest(x -> x.getName().equals(Constants.ZULRAH_NAME) && x.getHealthRatio() != 0);
-        if (zulrah != null)
-        {
+        if (zulrah != null) {
             zulrah.interact("Attack");
         }
 

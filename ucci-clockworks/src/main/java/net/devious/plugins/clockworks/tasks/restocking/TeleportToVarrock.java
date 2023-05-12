@@ -9,13 +9,11 @@ import net.unethicalite.api.game.Worlds;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.plugins.Task;
 
-public class TeleportToVarrock extends SessionUpdater implements Task
-{
+public class TeleportToVarrock extends SessionUpdater implements Task {
     WorldArea varrockArea = new WorldArea(3204, 3420, 19, 19, 0);
 
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         return Worlds.getCurrentWorld().isAllPkWorld() == false
                 && Inventory.contains("Varrock teleport")
                 && !Locations.VARROCK_TELEPORT.contains(LocalPlayer.get())
@@ -23,8 +21,7 @@ public class TeleportToVarrock extends SessionUpdater implements Task
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         getSession().setCurrentTask("Tele to varrock");
 
         Inventory.getFirst("Varrock teleport").interact("Break");

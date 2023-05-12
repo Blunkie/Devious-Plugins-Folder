@@ -10,21 +10,17 @@ import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.plugins.Task;
 import net.unethicalite.client.Static;
 
-public class HopToNormalWorld extends SessionUpdater implements Task
-{
+public class HopToNormalWorld extends SessionUpdater implements Task {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         return Inventory.contains("Varrock teleport") && Worlds.getCurrentWorld().isAllPkWorld();
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         getSession().setCurrentTask("Hopping to norm");
 
-        if (Bank.isOpen())
-        {
+        if (Bank.isOpen()) {
             Bank.close();
             return 600;
         }
@@ -41,8 +37,7 @@ public class HopToNormalWorld extends SessionUpdater implements Task
     }
 
     @Override
-    public boolean isBlocking()
-    {
+    public boolean isBlocking() {
         return true;
     }
 }

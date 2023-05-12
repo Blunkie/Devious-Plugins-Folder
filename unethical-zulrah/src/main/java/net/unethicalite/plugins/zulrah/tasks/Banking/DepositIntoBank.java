@@ -16,11 +16,9 @@ import net.unethicalite.plugins.zulrah.framework.SessionUpdater;
 import java.util.List;
 
 @Slf4j
-public class DepositIntoBank extends SessionUpdater implements Task
-{
+public class DepositIntoBank extends SessionUpdater implements Task {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         boolean seesBanker = NPCs.getNearest(c -> c.hasAction("Bank")) != null;
         GearSetup mageGear = ZulrahCycle.GREEN_CENTER_E.getZulrahType().getSetup();
         GearSetup rangeGear = ZulrahCycle.TANZ_CENTER_E.getZulrahType().getSetup();
@@ -32,20 +30,17 @@ public class DepositIntoBank extends SessionUpdater implements Task
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         log.info("Depositting items into bank");
         updateTask("Depositting items");
 
         TileObject bankChest = TileObjects.getNearest(c -> c.hasAction("Use") && c.getName().equalsIgnoreCase("Bank chest"));
 
-        if (bankChest == null)
-        {
+        if (bankChest == null) {
             return 600;
         }
 
-        if (!Bank.isOpen())
-        {
+        if (!Bank.isOpen()) {
             bankChest.interact("Use");
             Time.sleepUntil(() -> Bank.isOpen(), 1200);
             return 300;
@@ -53,17 +48,13 @@ public class DepositIntoBank extends SessionUpdater implements Task
 
         GearSetup rangeGear = ZulrahCycle.TANZ_CENTER_E.getZulrahType().getSetup();
         List<Item> invItems = Inventory.getAll();
-        for (Item invItem : invItems)
-        {
-            if (invItem == null)
-            {
+        for (Item invItem : invItems) {
+            if (invItem == null) {
                 continue;
             }
 
-            if (!rangeGear.hasItem(invItem.getName()))
-            {
-                if (Inventory.contains(invItem.getName()) && Bank.isOpen())
-                {
+            if (!rangeGear.hasItem(invItem.getName())) {
+                if (Inventory.contains(invItem.getName()) && Bank.isOpen()) {
                     Bank.depositAll(invItem.getName());
                 }
                 Time.sleep(90, 160);

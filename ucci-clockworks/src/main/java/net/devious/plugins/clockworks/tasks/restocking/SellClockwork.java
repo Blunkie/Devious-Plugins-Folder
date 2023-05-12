@@ -13,38 +13,30 @@ import net.unethicalite.api.plugins.Task;
 
 import java.util.Optional;
 
-public class SellClockwork extends SessionUpdater implements Task
-{
+public class SellClockwork extends SessionUpdater implements Task {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         Optional<GrandExchangeOffer> clockworkOffer = GrandExchange.getOffers().stream().filter(c -> c.getItemId() == 8792).findFirst();
         boolean isSelling = clockworkOffer.isPresent();
         return (Locations.GE_CENTER.contains(LocalPlayer.get()) && Inventory.contains("Clockwork")) || isSelling;
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         getSession().setCurrentTask("Selling clockwork");
 
-        if (!GrandExchange.isOpen())
-        {
+        if (!GrandExchange.isOpen()) {
             NPCs.getNearest("Grand Exchange Clerk").interact("Exchange");
             return 600;
         }
 
         Optional<GrandExchangeOffer> clockworkOffer = GrandExchange.getOffers().stream().filter(c -> c.getItemId() == 8792).findFirst();
-        if (clockworkOffer.isEmpty())
-        {
+        if (clockworkOffer.isEmpty()) {
             GrandExchange.sell(8792, Inventory.getCount(true, "Clockwork"), 700);
             return 600;
-        }
-        else
-        {
+        } else {
             GrandExchangeOffer offer = clockworkOffer.get();
-            if (offer.getState() == GrandExchangeOfferState.SOLD)
-            {
+            if (offer.getState() == GrandExchangeOfferState.SOLD) {
                 GrandExchange.collect(true);
             }
 
@@ -54,11 +46,9 @@ public class SellClockwork extends SessionUpdater implements Task
         return 600;
     }
 
-    private void OpenBank()
-    {
+    private void OpenBank() {
         NPC banker = NPCs.getNearest(c -> c.hasAction("Bank"));
-        if (banker != null)
-        {
+        if (banker != null) {
             banker.interact("Bank");
         }
     }

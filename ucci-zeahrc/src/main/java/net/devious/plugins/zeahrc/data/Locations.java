@@ -2,8 +2,7 @@ package net.devious.plugins.zeahrc.data;
 
 import net.runelite.api.coords.WorldPoint;
 
-public class Locations
-{
+public class Locations {
     public static final WorldPoint DarkAltarPoint = new WorldPoint(1718, 3881, 0);
     public static final WorldPoint SmallRocksShortcutNorthSide = new WorldPoint(1761, 3874, 0);
     public static final WorldPoint SmallRocksShortcutSouthSide = new WorldPoint(1761, 3872, 0);

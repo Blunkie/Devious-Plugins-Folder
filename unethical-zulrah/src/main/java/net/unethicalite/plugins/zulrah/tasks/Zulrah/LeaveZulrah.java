@@ -13,33 +13,26 @@ import java.util.List;
 import static net.unethicalite.plugins.zulrah.data.Constants.LOOT_TABLE;
 
 @Slf4j
-public class LeaveZulrah extends ZulrahTask
-{
+public class LeaveZulrah extends ZulrahTask {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         List<TileItem> groundItems = TileItems.getAll(i -> LOOT_TABLE.contains(i.getName()));
         return groundItems.isEmpty() && TileObjects.getNearest("Zul-Andra teleport") != null;
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         updateTask("Leaving zulrah");
         TileObject zulrahScroll = TileObjects.getNearest("Zul-Andra teleport");
 
-        if (zulrahScroll == null)
-        {
+        if (zulrahScroll == null) {
             log.warn("Scroll not found");
             return 600;
         }
 
-        if (Dialog.isOpen() && Dialog.chooseOption("Yes"))
-        {
+        if (Dialog.isOpen() && Dialog.chooseOption("Yes")) {
             Dialog.chooseOption("Yes");
-        }
-        else
-        {
+        } else {
             zulrahScroll.interact("Read");
         }
         return 1200;

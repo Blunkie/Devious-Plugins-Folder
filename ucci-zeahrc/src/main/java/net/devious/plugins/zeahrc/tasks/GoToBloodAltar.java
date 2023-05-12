@@ -9,19 +9,16 @@ import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.movement.Movement;
 import net.unethicalite.api.plugins.Task;
 
-public class GoToBloodAltar extends SessionUpdater implements Task
-{
+public class GoToBloodAltar extends SessionUpdater implements Task {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         return Inventory.contains(c -> c.getName().equalsIgnoreCase(Constants.EssenceFragments))
                 && Inventory.contains(c -> c.getName().equalsIgnoreCase(Constants.DarkEssenceBlock))
                 && LocalPlayer.get().distanceTo(Locations.BloodAltar) >= 8;
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         getSession().setCurrentTask("Go to blood altar");
 
         Movement.walkTo(Locations.BloodAltar);

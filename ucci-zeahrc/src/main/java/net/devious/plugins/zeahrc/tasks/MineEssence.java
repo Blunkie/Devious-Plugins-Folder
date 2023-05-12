@@ -9,11 +9,9 @@ import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.plugins.Task;
 
-public class MineEssence extends SessionUpdater implements Task
-{
+public class MineEssence extends SessionUpdater implements Task {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         TileObject runeStone = TileObjects.getNearest(Constants.DenseRunestone);
 
         return !Inventory.isFull()
@@ -23,15 +21,13 @@ public class MineEssence extends SessionUpdater implements Task
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         getSession().setCurrentTask("Mining essence");
 
         TileObject runeStone = TileObjects.getNearest(c -> c.hasAction("Chip")
                 && c.getName().equalsIgnoreCase(Constants.DenseRunestone));
 
-        if (runeStone == null)
-        {
+        if (runeStone == null) {
             System.out.println("Runestone == null!");
             return 600;
         }
@@ -42,8 +38,7 @@ public class MineEssence extends SessionUpdater implements Task
     }
 
     @Override
-    public boolean isBlocking()
-    {
+    public boolean isBlocking() {
         return true;
     }
 }

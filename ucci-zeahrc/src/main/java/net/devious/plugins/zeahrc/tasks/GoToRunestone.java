@@ -11,20 +11,17 @@ import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.movement.Movement;
 import net.unethicalite.api.plugins.Task;
 
-public class GoToRunestone extends SessionUpdater implements Task
-{
+public class GoToRunestone extends SessionUpdater implements Task {
 
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         TileObject runeStone = TileObjects.getNearest(c -> c.hasAction("Chip"));
         return runeStone != null && !Inventory.isFull() && !Inventory.contains(Constants.DarkEssenceBlock) && runeStone.distanceTo(LocalPlayer.get()) > 10
                 && !(Locations.BloodAltar.distanceTo(LocalPlayer.get()) < 5 && Inventory.contains(Constants.EssenceFragments));
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         getSession().setCurrentTask("Going to runestone");
 
         Movement.walkTo(Locations.DenseRunestoneCenter);
@@ -33,8 +30,7 @@ public class GoToRunestone extends SessionUpdater implements Task
     }
 
     @Override
-    public boolean isBlocking()
-    {
+    public boolean isBlocking() {
         return true;
     }
 }

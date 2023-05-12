@@ -9,11 +9,9 @@ import net.unethicalite.plugins.zulrah.data.phases.ZulrahCycle;
 import net.unethicalite.plugins.zulrah.framework.SessionUpdater;
 
 @Slf4j
-public class EquipMagicGear extends SessionUpdater implements Task
-{
+public class EquipMagicGear extends SessionUpdater implements Task {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         boolean seesBanker = NPCs.getNearest(c -> c.hasAction("Bank")) != null;
         GearSetup mageGear = ZulrahCycle.GREEN_CENTER_E.getZulrahType().getSetup();
 
@@ -21,8 +19,7 @@ public class EquipMagicGear extends SessionUpdater implements Task
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         log.info("Equipping magic gear");
         updateTask("Equipping magic gear");
 

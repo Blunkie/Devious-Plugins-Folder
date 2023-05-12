@@ -8,22 +8,19 @@ import java.util.List;
 
 @Getter
 @RequiredArgsConstructor
-public final class ZulrahNode
-{
+public final class ZulrahNode {
     private final List<ZulrahNode> children = new ArrayList<>();
     private final ZulrahNode parent;
     private final ZulrahCycle zulrahCycle;
 
-    public ZulrahNode add(ZulrahCycle child)
-    {
+    public ZulrahNode add(ZulrahCycle child) {
         ZulrahNode cn = new ZulrahNode(this, child);
         this.children.add(cn);
 
         return cn;
     }
 
-    public boolean hasChildren()
-    {
+    public boolean hasChildren() {
         return !children.isEmpty();
     }
 }

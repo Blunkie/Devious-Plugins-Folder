@@ -5,19 +5,16 @@ import net.unethicalite.plugins.zulrah.framework.ZulrahTask;
 
 import java.util.Random;
 
-public class SwitchGear extends ZulrahTask
-{
+public class SwitchGear extends ZulrahTask {
     private static final Random rng = new Random();
 
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         return getZulrahCycle() != null && getZulrahCycle().getZulrahType().getSetup().anyUnequipped();
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         updateTask("Switching gear");
 
         getZulrahCycle().getZulrahType().getSetup().switchGear(rng.nextInt(150) + 100);
@@ -26,8 +23,7 @@ public class SwitchGear extends ZulrahTask
     }
 
     @Override
-    public boolean isBlocking()
-    {
+    public boolean isBlocking() {
         return false;
     }
 }

@@ -9,19 +9,16 @@ import net.unethicalite.client.Static;
 import net.unethicalite.plugins.zulrah.data.Constants;
 import net.unethicalite.plugins.zulrah.framework.ZulrahTask;
 
-public class PanicTeleport extends ZulrahTask
-{
+public class PanicTeleport extends ZulrahTask {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         return Combat.getCurrentHealth() < 45
                 && Inventory.getFirst(c -> c.hasAction("Eat")) == null
                 && Static.getClient().isInInstancedRegion();
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         updateTask("Panic teleporting");
 
         Inventory.getFirst(c -> c.getName().startsWith(Constants.RING_OF_DUELING)).interact("Wear");

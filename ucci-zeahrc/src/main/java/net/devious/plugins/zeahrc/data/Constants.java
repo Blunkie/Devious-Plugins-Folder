@@ -1,7 +1,6 @@
 package net.devious.plugins.zeahrc.data;
 
-public class Constants
-{
+public class Constants {
     public static final String DarkEssenceBlock = "Dark essence block";
     public static final String DenseRunestone = "Dense runestone";
     public static final String DepletedRunestone = "Depleted runestone";

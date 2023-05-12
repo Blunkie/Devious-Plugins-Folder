@@ -6,29 +6,24 @@ import java.time.Duration;
 import java.time.Instant;
 
 @Getter
-public class BotSession
-{
+public class BotSession {
     private String currentTask;
     private Instant startTime;
 
-    public void startTimer()
-    {
+    public void startTimer() {
         startTime = Instant.now();
     }
 
-    public String getElapsedTime()
-    {
+    public String getElapsedTime() {
         Duration time = Duration.between(startTime, Instant.now());
         return convertSecondsToHMmSs(time.toSeconds());
     }
 
-    public void setCurrentTask(String task)
-    {
+    public void setCurrentTask(String task) {
         currentTask = task;
     }
 
-    private String convertSecondsToHMmSs(long seconds)
-    {
+    private String convertSecondsToHMmSs(long seconds) {
         long s = seconds % 60;
         long m = (seconds / 60) % 60;
         long h = (seconds / (60 * 60)) % 24;

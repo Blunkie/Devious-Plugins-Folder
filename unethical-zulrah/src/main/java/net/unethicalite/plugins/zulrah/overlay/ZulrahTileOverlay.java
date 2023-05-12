@@ -16,14 +16,12 @@ import javax.inject.Inject;
 import java.awt.*;
 import java.util.List;
 
-public class ZulrahTileOverlay extends Overlay
-{
+public class ZulrahTileOverlay extends Overlay {
     private final Client client;
     private final UnethicalZulrahPlugin plugin;
 
     @Inject
-    private ZulrahTileOverlay(Client client, UnethicalZulrahPlugin plugin)
-    {
+    private ZulrahTileOverlay(Client client, UnethicalZulrahPlugin plugin) {
         this.client = client;
         this.plugin = plugin;
         setPosition(OverlayPosition.DYNAMIC);
@@ -32,29 +30,24 @@ public class ZulrahTileOverlay extends Overlay
     }
 
     @Override
-    public Dimension render(Graphics2D graphics)
-    {
+    public Dimension render(Graphics2D graphics) {
         Stroke stroke = new BasicStroke(1);
         Color tileColor = Color.GREEN;
 
-        if (plugin.node != null)
-        {
+        if (plugin.node != null) {
             WorldPoint worldPoint = plugin.node.getZulrahCycle().getSafeSpot(plugin.origin);
-            if (worldPoint.getPlane() != client.getPlane())
-            {
+            if (worldPoint.getPlane() != client.getPlane()) {
                 return null;
             }
 
             drawTile(graphics, worldPoint, tileColor, plugin.node.getZulrahCycle().name(), stroke);
         }
 
-        if (plugin.node != null && plugin.node.hasChildren() && plugin.node.getZulrahCycle() != ZulrahCycle.INITIAL)
-        {
+        if (plugin.node != null && plugin.node.hasChildren() && plugin.node.getZulrahCycle() != ZulrahCycle.INITIAL) {
             List<ZulrahNode> childNodes = plugin.node.getChildren();
             ZulrahNode childNode = childNodes.get(0);
             WorldPoint worldPoint = childNode.getZulrahCycle().getSafeSpot(plugin.origin);
-            if (worldPoint.getPlane() != client.getPlane())
-            {
+            if (worldPoint.getPlane() != client.getPlane()) {
                 return null;
             }
 
@@ -65,32 +58,26 @@ public class ZulrahTileOverlay extends Overlay
         return null;
     }
 
-    private void drawTile(Graphics2D graphics, WorldPoint point, Color color, @Nullable String label, Stroke borderStroke)
-    {
+    private void drawTile(Graphics2D graphics, WorldPoint point, Color color, @Nullable String label, Stroke borderStroke) {
         WorldPoint playerLocation = client.getLocalPlayer().getWorldLocation();
 
-        if (point.distanceTo(playerLocation) >= 100)
-        {
+        if (point.distanceTo(playerLocation) >= 100) {
             return;
         }
 
         LocalPoint lp = LocalPoint.fromWorld(client, point);
-        if (lp == null)
-        {
+        if (lp == null) {
             return;
         }
 
         Polygon poly = Perspective.getCanvasTilePoly(client, lp);
-        if (poly != null)
-        {
+        if (poly != null) {
             OverlayUtil.renderPolygon(graphics, poly, color, new Color(0, 0, 0, 0), borderStroke);
         }
 
-        if (!Strings.isNullOrEmpty(label))
-        {
+        if (!Strings.isNullOrEmpty(label)) {
             Point canvasTextLocation = Perspective.getCanvasTextLocation(client, graphics, lp, label, 0);
-            if (canvasTextLocation != null)
-            {
+            if (canvasTextLocation != null) {
                 OverlayUtil.renderTextLocation(graphics, canvasTextLocation, label, color);
             }
         }

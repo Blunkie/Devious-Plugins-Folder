@@ -7,8 +7,7 @@ import net.devious.plugins.clockworks.ClockworkPlugin;
 import net.devious.plugins.clockworks.overlay.BotSession;
 
 @Getter
-public abstract class SessionUpdater
-{
+public abstract class SessionUpdater {
 
     @Setter
     private BotSession session;

@@ -8,17 +8,14 @@ import net.unethicalite.api.items.Bank;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.plugins.Task;
 
-public class WithdrawTeleTab extends SessionUpdater implements Task
-{
+public class WithdrawTeleTab extends SessionUpdater implements Task {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         return Bank.isOpen() && !Inventory.contains("Varrock teleport") && !Locations.GE_CENTER.contains(LocalPlayer.get());
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         getSession().setCurrentTask("Withdraw tab");
 
         Bank.depositAllExcept(-1);

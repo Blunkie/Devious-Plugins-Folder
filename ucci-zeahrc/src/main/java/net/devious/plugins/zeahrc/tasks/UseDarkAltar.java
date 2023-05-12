@@ -9,11 +9,9 @@ import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.plugins.Task;
 
-public class UseDarkAltar extends SessionUpdater implements Task
-{
+public class UseDarkAltar extends SessionUpdater implements Task {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         TileObject darkAltar = TileObjects.getNearest(c -> c.getName().equalsIgnoreCase(Constants.DarkAltar));
 
         return Inventory.isFull()
@@ -22,13 +20,11 @@ public class UseDarkAltar extends SessionUpdater implements Task
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         getSession().setCurrentTask("Using dark altar");
 
         TileObject darkAltar = TileObjects.getNearest(c -> c.getName().equalsIgnoreCase(Constants.DarkAltar));
-        if (darkAltar == null)
-        {
+        if (darkAltar == null) {
             return 600;
         }
 

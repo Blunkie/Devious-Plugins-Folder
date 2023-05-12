@@ -12,11 +12,9 @@ import net.unethicalite.api.plugins.Task;
 import net.unethicalite.plugins.zulrah.data.Constants;
 import net.unethicalite.plugins.zulrah.framework.SessionUpdater;
 
-public class GetNewRingOfDueling extends SessionUpdater implements Task
-{
+public class GetNewRingOfDueling extends SessionUpdater implements Task {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         boolean seesBanker = NPCs.getNearest(c -> c.hasAction("Bank")) != null;
         boolean noRingOfDueling = !Equipment.contains(c -> c.getName().contains(Constants.RING_OF_DUELING));
 
@@ -24,29 +22,24 @@ public class GetNewRingOfDueling extends SessionUpdater implements Task
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         getSession().setCurrentTask("Getting new ring of dueling");
 
         TileObject bankChest = TileObjects.getNearest(c -> c.hasAction("Use")
                 && c.getName().equalsIgnoreCase("Bank chest"));
 
-        if (bankChest == null)
-        {
+        if (bankChest == null) {
             return 1200;
         }
 
-        if (!Bank.isOpen())
-        {
+        if (!Bank.isOpen()) {
             bankChest.interact("Use");
             Time.sleepUntil(() -> Bank.isOpen(), 3600);
         }
         Time.sleepTicks(1);
-        if (!Inventory.contains(c -> c.getName().startsWith(Constants.RING_OF_DUELING)))
-        {
+        if (!Inventory.contains(c -> c.getName().startsWith(Constants.RING_OF_DUELING))) {
             Item ringOfDueling = Bank.getFirst(c -> c.getName().startsWith(Constants.RING_OF_DUELING) && c.getQuantity() > 0);
-            if (ringOfDueling == null)
-            {
+            if (ringOfDueling == null) {
 
                 return 600;
             }
@@ -57,8 +50,7 @@ public class GetNewRingOfDueling extends SessionUpdater implements Task
             Bank.close();
         }
 
-        if (!Equipment.contains(c -> c.getName().contains(Constants.RING_OF_DUELING)) && Inventory.contains(c -> c.getName().startsWith(Constants.RING_OF_DUELING)))
-        {
+        if (!Equipment.contains(c -> c.getName().contains(Constants.RING_OF_DUELING)) && Inventory.contains(c -> c.getName().startsWith(Constants.RING_OF_DUELING))) {
             Inventory.getFirst(c -> c.getName().startsWith(Constants.RING_OF_DUELING)).interact("Wear");
         }
         return 600;

@@ -7,8 +7,7 @@ import net.runelite.api.coords.WorldPoint;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-public enum ZulrahCycle
-{
+public enum ZulrahCycle {
     INITIAL(ZulrahType.RANGE, SafeSpot.NORTH_EAST, ZulrahPosition.CENTER),
 
     GREEN_EAST_NE(ZulrahType.RANGE, SafeSpot.NORTH_EAST, ZulrahPosition.EAST),
@@ -50,38 +49,31 @@ public enum ZulrahCycle
     private final SafeSpot safeSpot;
     private final ZulrahPosition zulrahPos;
 
-    public WorldPoint getSafeSpot(WorldPoint origin)
-    {
+    public WorldPoint getSafeSpot(WorldPoint origin) {
         return origin.dx(safeSpot.getOffsetX()).dy(safeSpot.getOffsetY());
     }
 
-    public WorldPoint getZulrahPosition(WorldPoint origin)
-    {
+    public WorldPoint getZulrahPosition(WorldPoint origin) {
         return origin.dx(zulrahPos.getOffsetX()).dy(zulrahPos.getOffsetY());
     }
 
-    public boolean isJad()
-    {
+    public boolean isJad() {
         return zulrahType == ZulrahType.JAD_RANGE_FIRST || zulrahType == ZulrahType.JAD_MAGIC_FIRST;
     }
 
-    public boolean isMagic()
-    {
+    public boolean isMagic() {
         return zulrahType == ZulrahType.MAGIC;
     }
 
-    public boolean isRange()
-    {
+    public boolean isRange() {
         return zulrahType == ZulrahType.RANGE;
     }
 
-    public boolean isMelee()
-    {
+    public boolean isMelee() {
         return zulrahType == ZulrahType.MELEE;
     }
 
-    public boolean isCenter()
-    {
+    public boolean isCenter() {
         return zulrahPos == ZulrahPosition.CENTER;
     }
 }

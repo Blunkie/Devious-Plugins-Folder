@@ -6,8 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @Getter
-public enum ZulrahPosition
-{
+public enum ZulrahPosition {
     EAST(8, 3),
     WEST(-12, 3),
     CENTER(-2, 5),

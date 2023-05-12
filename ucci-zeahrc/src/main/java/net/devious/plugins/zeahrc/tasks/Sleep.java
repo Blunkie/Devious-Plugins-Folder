@@ -7,28 +7,22 @@ import net.unethicalite.api.plugins.Task;
 
 import java.util.Random;
 
-public class Sleep extends SessionUpdater implements Task
-{
+public class Sleep extends SessionUpdater implements Task {
     static final Random rng = new Random();
 
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         return LocalPlayer.get().isAnimating();
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         int animtation = LocalPlayer.get().getAnimation();
         int sleepTime;
 
-        if (animtation == 7201 || animtation == 3873)
-        {
+        if (animtation == 7201 || animtation == 3873) {
             sleepTime = rng.nextInt(10000) + 600;
-        }
-        else
-        {
+        } else {
             sleepTime = rng.nextInt(2400) + 600;
         }
 
@@ -38,8 +32,7 @@ public class Sleep extends SessionUpdater implements Task
     }
 
     @Override
-    public boolean isBlocking()
-    {
+    public boolean isBlocking() {
         return true;
     }
 }

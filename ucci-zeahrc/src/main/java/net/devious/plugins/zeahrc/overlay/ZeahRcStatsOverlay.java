@@ -10,13 +10,11 @@ import net.runelite.client.ui.overlay.components.LineComponent;
 
 import java.awt.*;
 
-public class ZeahRcStatsOverlay extends OverlayPanel
-{
+public class ZeahRcStatsOverlay extends OverlayPanel {
     private final ZeahRcPlugin plugin;
 
     @Inject
-    private ZeahRcStatsOverlay(ZeahRcPlugin plugin)
-    {
+    private ZeahRcStatsOverlay(ZeahRcPlugin plugin) {
         super(plugin);
         setPosition(OverlayPosition.TOP_LEFT);
         setPriority(OverlayPriority.LOW);
@@ -24,8 +22,7 @@ public class ZeahRcStatsOverlay extends OverlayPanel
     }
 
     @Override
-    public Dimension render(Graphics2D graphics)
-    {
+    public Dimension render(Graphics2D graphics) {
         ZeahRcSession session = plugin.getSession();
 
         panelComponent.getChildren().add(LineComponent.builder()

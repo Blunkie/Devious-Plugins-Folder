@@ -8,19 +8,15 @@ import net.unethicalite.api.game.Worlds;
 import net.unethicalite.api.plugins.Task;
 import net.unethicalite.api.widgets.Dialog;
 
-public class HopToPvpWorld extends SessionUpdater implements Task
-{
+public class HopToPvpWorld extends SessionUpdater implements Task {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         return Locations.CAMELOT_TELEPORT.distanceTo(LocalPlayer.get()) < 10 && Worlds.getCurrentWorld().getId() != getConfig().pkWorld();
     }
 
     @Override
-    public int execute()
-    {
-        if (Dialog.canContinue())
-        {
+    public int execute() {
+        if (Dialog.canContinue()) {
             Dialog.continueSpace();
             return 300;
         }
@@ -28,13 +24,10 @@ public class HopToPvpWorld extends SessionUpdater implements Task
         int pvpWorldId = getConfig().pkWorld();
 
         World worldToHopTo = Worlds.getFirst(pvpWorldId);
-        if (worldToHopTo != null)
-        {
+        if (worldToHopTo != null) {
             getSession().setCurrentTask("Hopping to pvp world");
             Worlds.hopTo(worldToHopTo);
-        }
-        else
-        {
+        } else {
             getSession().setCurrentTask("World" + pvpWorldId + " not found");
         }
 

@@ -11,13 +11,11 @@ import net.runelite.client.ui.overlay.components.LineComponent;
 
 import java.awt.*;
 
-public class SessionOverlay extends OverlayPanel
-{
+public class SessionOverlay extends OverlayPanel {
     private final ClockworkPlugin plugin;
 
     @Inject
-    private SessionOverlay(ClockworkPlugin plugin)
-    {
+    private SessionOverlay(ClockworkPlugin plugin) {
         super(plugin);
         setPosition(OverlayPosition.TOP_LEFT);
         setPriority(OverlayPriority.LOW);
@@ -26,8 +24,7 @@ public class SessionOverlay extends OverlayPanel
     }
 
     @Override
-    public Dimension render(Graphics2D graphics)
-    {
+    public Dimension render(Graphics2D graphics) {
         BotSession session = plugin.getSession();
 
         panelComponent.getChildren().add(LineComponent.builder()

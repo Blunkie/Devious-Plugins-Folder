@@ -9,8 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class Constants
-{
+public class Constants {
     public static final String BANK_NAME = "Bank chest";
     public static final String ZULRAH_NAME = "Zulrah";
     public static final String DART_NAME = "dart";

@@ -48,8 +48,7 @@ import java.util.stream.Collectors;
 @Extension
 @PluginDescriptor(name = "Unethical Zulrah", enabledByDefault = false)
 @Slf4j
-public class UnethicalZulrahPlugin extends TaskPlugin
-{
+public class UnethicalZulrahPlugin extends TaskPlugin {
     @Inject
     private ZulrahTileOverlay tileOverlay;
 
@@ -105,8 +104,7 @@ public class UnethicalZulrahPlugin extends TaskPlugin
 
     @SneakyThrows
     @Override
-    protected void startUp()
-    {
+    protected void startUp() {
         running = true;
         session = new ZulrahSession();
         session.setCurrentTask("Starting up");
@@ -172,10 +170,8 @@ public class UnethicalZulrahPlugin extends TaskPlugin
         ZulrahType.setMagePhaseGear(new GearSetup(rangeGearNames), config.useRigour());
         ZulrahType.setRangedMeleePhaseGear(new GearSetup(mageGearNames));
 
-        for (Task task : tasks)
-        {
-            if (task instanceof SessionUpdater)
-            {
+        for (Task task : tasks) {
+            if (task instanceof SessionUpdater) {
                 SessionUpdater updater = (SessionUpdater) task;
                 updater.setSession(this.session);
                 updater.setPlugin(this);
@@ -184,8 +180,7 @@ public class UnethicalZulrahPlugin extends TaskPlugin
     }
 
     @Override
-    public void stop()
-    {
+    public void stop() {
         running = false;
         session = new ZulrahSession();
 
@@ -193,20 +188,16 @@ public class UnethicalZulrahPlugin extends TaskPlugin
         overlayManager.remove(statsOverlay);
     }
 
-    public Task[] getTasks()
-    {
-        if (running)
-        {
+    public Task[] getTasks() {
+        if (running) {
             return tasks;
         }
 
         return new Task[0];
     }
 
-    private void refresh()
-    {
-        if (!atZulrah())
-        {
+    private void refresh() {
+        if (!atZulrah()) {
             node = null;
             origin = null;
             rotationName = "None";
@@ -215,19 +206,16 @@ public class UnethicalZulrahPlugin extends TaskPlugin
 
         // on enter
         Widget cont = Widgets.get(WidgetInfo.DIALOG_NOTIFICATION_CONTINUE);
-        if (cont != null && cont.getText().startsWith("The priestess rows you to Zulrah's") && Dialog.canContinue())
-        {
+        if (cont != null && cont.getText().startsWith("The priestess rows you to Zulrah's") && Dialog.canContinue()) {
             origin = Players.getLocal().getWorldLocation();
             node = tree.getRoot();
             return;
         }
 
         NPC zulrah = NPCs.getNearest(Constants.ZULRAH_NAME);
-        if (zulrah != null)
-        {
+        if (zulrah != null) {
             // go back to root if we're not on a node
-            if (node == null)
-            {
+            if (node == null) {
                 log.info("Node is null");
                 rotationName = "None";
                 node = tree.getRoot();
@@ -242,26 +230,22 @@ public class UnethicalZulrahPlugin extends TaskPlugin
 
             List<ZulrahNode> children = node.getChildren();
 
-            if (rotationName.equals("First rotation") && node.getZulrahCycle() == ZulrahCycle.TANZ_SOUTH_E_CW && zulrahAttacks >= 3)
-            {
+            if (rotationName.equals("First rotation") && node.getZulrahCycle() == ZulrahCycle.TANZ_SOUTH_E_CW && zulrahAttacks >= 3) {
                 node = children.get(0);
             }
 
-            if (rotationName.equals("Fourth rotation") && node.getZulrahCycle() == ZulrahCycle.GREEN_SOUTH_E_W && zulrahAttacks >= 6)
-            {
+            if (rotationName.equals("Fourth rotation") && node.getZulrahCycle() == ZulrahCycle.GREEN_SOUTH_E_W && zulrahAttacks >= 6) {
                 node = children.get(0);
             }
 
             // on despawn, set new node
             if (zulrah.getAnimation() == Constants.DISAPPEAR_ANIMATION
                     && node.getZulrahCycle().getZulrahType().id() == zulrah.getId()
-                    && node.getZulrahCycle().getZulrahPosition(origin).equals(zulrah.getWorldLocation()))
-            {
+                    && node.getZulrahCycle().getZulrahPosition(origin).equals(zulrah.getWorldLocation())) {
                 log.debug("Zulrah despawned, cycling node");
                 zulrahAttacks = 0;
 
-                if (children.size() == 0)
-                {
+                if (children.size() == 0) {
                     node = tree.getRoot();
                     return;
                 }
@@ -272,24 +256,20 @@ public class UnethicalZulrahPlugin extends TaskPlugin
 
             // if we're on the wrong node, go up 1 node and start traversal
             if (node.getZulrahCycle().getZulrahType().id() != zulrah.getId()
-                    || !node.getZulrahCycle().getZulrahPosition(origin).equals(zulrah.getWorldLocation()))
-            {
+                    || !node.getZulrahCycle().getZulrahPosition(origin).equals(zulrah.getWorldLocation())) {
                 log.debug("We are on the wrong node {} {}", node.getZulrahCycle().getZulrahPosition(origin), zulrah.getWorldLocation());
                 ZulrahNode parent = node.getParent();
                 zulrahAttacks = 0;
 
-                if (parent == null)
-                {
+                if (parent == null) {
                     return;
                 }
 
                 // check children until we found the correct rotation
                 List<ZulrahNode> childs = new ArrayList<>(parent.getChildren());
-                for (ZulrahNode node : childs)
-                {
+                for (ZulrahNode node : childs) {
                     if (node.getZulrahCycle().getZulrahPosition(origin).equals(zulrah.getWorldLocation())
-                            && node.getZulrahCycle().getZulrahType().id() == zulrah.getId())
-                    {
+                            && node.getZulrahCycle().getZulrahType().id() == zulrah.getId()) {
                         log.debug("Found correct node");
                         this.node = node;
                         return;
@@ -299,81 +279,63 @@ public class UnethicalZulrahPlugin extends TaskPlugin
         }
     }
 
-    private void updateCycle(ZulrahCycle zulrahCycle)
-    {
-        for (Task task : getTasks())
-        {
-            if (task instanceof ZulrahTask)
-            {
+    private void updateCycle(ZulrahCycle zulrahCycle) {
+        for (Task task : getTasks()) {
+            if (task instanceof ZulrahTask) {
                 ((ZulrahTask) task).setZulrahCycle(zulrahCycle);
             }
         }
     }
 
-    private void updateOrigin(WorldPoint origin)
-    {
-        for (Task task : getTasks())
-        {
-            if (task instanceof ZulrahTask)
-            {
+    private void updateOrigin(WorldPoint origin) {
+        for (Task task : getTasks()) {
+            if (task instanceof ZulrahTask) {
                 ((ZulrahTask) task).setOrigin(origin);
             }
         }
     }
 
-    public static boolean atZulrah()
-    {
+    public static boolean atZulrah() {
         return Static.getClient().isInInstancedRegion();
     }
 
     @Provides
-    UnethicalZulrahConfig provideConfig(ConfigManager configManager)
-    {
+    UnethicalZulrahConfig provideConfig(ConfigManager configManager) {
         return configManager.getConfig(UnethicalZulrahConfig.class);
     }
 
     @Subscribe
-    private void onGameStateChanged(GameStateChanged event)
-    {
-        if (event.getGameState() == GameState.LOGIN_SCREEN)
-        {
+    private void onGameStateChanged(GameStateChanged event) {
+        if (event.getGameState() == GameState.LOGIN_SCREEN) {
             SwingUtilities.invokeLater(() -> Plugins.stopPlugin(this));
         }
     }
 
     @Subscribe
-    private void onActorDeath(ActorDeath event)
-    {
-        if (event.getActor() == Players.getLocal())
-        {
+    private void onActorDeath(ActorDeath event) {
+        if (event.getActor() == Players.getLocal()) {
             SwingUtilities.invokeLater(() -> Plugins.stopPlugin(this));
         }
 
-        if (event.getActor().getName().equalsIgnoreCase(Constants.ZULRAH_NAME))
-        {
+        if (event.getActor().getName().equalsIgnoreCase(Constants.ZULRAH_NAME)) {
             session.addKill();
         }
     }
 
     @Subscribe
-    private void onGameTick(GameTick e)
-    {
+    private void onGameTick(GameTick e) {
         refresh();
 
-        if (node != null)
-        {
+        if (node != null) {
             updateCycle(node.getZulrahCycle());
             updateOrigin(origin);
-        }
-        else
-        {
+        } else {
             updateCycle(null);
             updateOrigin(null);
         }
     }
 
-    public ZulrahSession getSession()
-    {
+    public ZulrahSession getSession() {
         return this.session;
     }
 }

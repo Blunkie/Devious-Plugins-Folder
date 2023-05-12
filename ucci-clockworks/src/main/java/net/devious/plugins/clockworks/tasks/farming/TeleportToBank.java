@@ -9,11 +9,9 @@ import net.unethicalite.api.magic.SpellBook;
 import net.unethicalite.api.plugins.Task;
 import net.unethicalite.client.Static;
 
-public class TeleportToBank extends SessionUpdater implements Task
-{
+public class TeleportToBank extends SessionUpdater implements Task {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         return Static.getClient().isInInstancedRegion()
                 && !Inventory.contains("Steel bar")
                 && Inventory.contains("Law rune")
@@ -21,8 +19,7 @@ public class TeleportToBank extends SessionUpdater implements Task
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         getSession().setCurrentTask("Teleport to bank");
 
         Spell teleport = SpellBook.Standard.CAMELOT_TELEPORT;

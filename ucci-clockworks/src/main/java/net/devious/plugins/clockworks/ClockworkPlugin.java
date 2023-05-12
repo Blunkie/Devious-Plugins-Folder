@@ -29,8 +29,7 @@ import javax.swing.*;
 @Extension
 @PluginDescriptor(name = "Ucci clockworks", enabledByDefault = false)
 @Slf4j
-public class ClockworkPlugin extends TaskPlugin
-{
+public class ClockworkPlugin extends TaskPlugin {
     @Inject
     private SessionOverlay statsOverlay;
 
@@ -71,8 +70,7 @@ public class ClockworkPlugin extends TaskPlugin
 
     @SneakyThrows
     @Override
-    protected void startUp()
-    {
+    protected void startUp() {
         running = true;
         session = new BotSession();
         session.setCurrentTask("Starting up");
@@ -81,20 +79,16 @@ public class ClockworkPlugin extends TaskPlugin
 
         overlayManager.add(statsOverlay);
 
-        for (Task task : farmingTasks)
-        {
-            if (task instanceof SessionUpdater)
-            {
+        for (Task task : farmingTasks) {
+            if (task instanceof SessionUpdater) {
                 SessionUpdater sessionTask = (SessionUpdater) task;
                 sessionTask.setSession(session);
                 sessionTask.setConfig(config);
             }
         }
 
-        for (Task task : restockTasks)
-        {
-            if (task instanceof SessionUpdater)
-            {
+        for (Task task : restockTasks) {
+            if (task instanceof SessionUpdater) {
                 SessionUpdater sessionTask = (SessionUpdater) task;
                 sessionTask.setSession(session);
                 sessionTask.setConfig(config);
@@ -103,28 +97,23 @@ public class ClockworkPlugin extends TaskPlugin
     }
 
     @Override
-    public void stop()
-    {
+    public void stop() {
         running = false;
         session = new BotSession();
         overlayManager.remove(statsOverlay);
         BotMemory.wipeMemory();
     }
 
-    public Task[] getTasks()
-    {
-        if (!running || Static.getClient().getGameState() == GameState.HOPPING)
-        {
+    public Task[] getTasks() {
+        if (!running || Static.getClient().getGameState() == GameState.HOPPING) {
             return new Task[0];
         }
 
-        if (BotMemory.getBool(MemoryConstants.BL_NEEDS_RESTOCK) == false)
-        {
+        if (BotMemory.getBool(MemoryConstants.BL_NEEDS_RESTOCK) == false) {
             return farmingTasks;
         }
 
-        if (BotMemory.getBool(MemoryConstants.BL_NEEDS_RESTOCK) == true)
-        {
+        if (BotMemory.getBool(MemoryConstants.BL_NEEDS_RESTOCK) == true) {
             return restockTasks;
         }
 
@@ -132,22 +121,18 @@ public class ClockworkPlugin extends TaskPlugin
     }
 
     @Provides
-    ClockworkConfig provideConfig(ConfigManager configManager)
-    {
+    ClockworkConfig provideConfig(ConfigManager configManager) {
         return configManager.getConfig(ClockworkConfig.class);
     }
 
     @Subscribe
-    private void onGameStateChanged(GameStateChanged event)
-    {
-        if (event.getGameState() == GameState.LOGIN_SCREEN)
-        {
+    private void onGameStateChanged(GameStateChanged event) {
+        if (event.getGameState() == GameState.LOGIN_SCREEN) {
             SwingUtilities.invokeLater(() -> Plugins.stopPlugin(this));
         }
     }
 
-    public BotSession getSession()
-    {
+    public BotSession getSession() {
         return this.session;
     }
 }

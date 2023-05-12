@@ -5,14 +5,11 @@ import net.unethicalite.api.items.Equipment;
 import net.unethicalite.plugins.zulrah.data.phases.ZulrahCycle;
 import net.unethicalite.plugins.zulrah.framework.ZulrahTask;
 
-public class SetLongRange extends ZulrahTask
-{
+public class SetLongRange extends ZulrahTask {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         ZulrahCycle cycle = getZulrahCycle();
-        if (cycle == null)
-        {
+        if (cycle == null) {
             return false;
         }
 
@@ -25,12 +22,10 @@ public class SetLongRange extends ZulrahTask
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         updateTask("Setting long range");
 
-        if (Combat.getAttackStyle() != Combat.AttackStyle.FOURTH)
-        {
+        if (Combat.getAttackStyle() != Combat.AttackStyle.FOURTH) {
             Combat.setAttackStyle(Combat.AttackStyle.FOURTH);
         }
 

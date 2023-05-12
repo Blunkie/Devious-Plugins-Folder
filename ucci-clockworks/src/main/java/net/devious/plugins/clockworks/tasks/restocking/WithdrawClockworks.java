@@ -11,33 +11,25 @@ import net.unethicalite.api.items.GrandExchange;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.plugins.Task;
 
-public class WithdrawClockworks extends SessionUpdater implements Task
-{
+public class WithdrawClockworks extends SessionUpdater implements Task {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         return Locations.GE_CENTER.contains(LocalPlayer.get()) && !Inventory.contains("Clockwork") && !Inventory.contains("Coins") && !GrandExchange.isOpen();
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         getSession().setCurrentTask("Withdraw clockwork/coins");
 
-        if (!Bank.isOpen())
-        {
+        if (!Bank.isOpen()) {
             OpenBank();
             return 600;
         }
 
-        if (!Inventory.contains("Clockwork"))
-        {
-            if (Bank.getCount(true, "Clockwork") >= 1)
-            {
+        if (!Inventory.contains("Clockwork")) {
+            if (Bank.getCount(true, "Clockwork") >= 1) {
                 Bank.withdrawAll("Clockwork", Bank.WithdrawMode.NOTED);
-            }
-            else
-            {
+            } else {
                 Bank.withdrawAll("Coins", Bank.WithdrawMode.ITEM);
             }
 
@@ -48,11 +40,9 @@ public class WithdrawClockworks extends SessionUpdater implements Task
         return 600;
     }
 
-    private void OpenBank()
-    {
+    private void OpenBank() {
         NPC banker = NPCs.getNearest(c -> c.hasAction("Bank"));
-        if (banker != null)
-        {
+        if (banker != null) {
             banker.interact("Bank");
         }
     }

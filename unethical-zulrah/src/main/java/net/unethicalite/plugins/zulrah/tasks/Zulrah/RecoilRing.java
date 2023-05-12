@@ -9,14 +9,12 @@ import net.unethicalite.plugins.zulrah.framework.ZulrahTask;
 
 import java.util.function.Predicate;
 
-public class RecoilRing extends ZulrahTask
-{
+public class RecoilRing extends ZulrahTask {
     private static final Predicate<Item> RECOIL_PREDICATE = i -> i.getName().contains("Ring of recoil")
             || i.getName().contains("Ring of suffering");
 
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         return !Equipment.contains(RECOIL_PREDICATE)
                 && Inventory.contains(RECOIL_PREDICATE)
                 && Static.getClient().isInInstancedRegion()
@@ -24,8 +22,7 @@ public class RecoilRing extends ZulrahTask
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         updateTask("Equipping recoil");
 
         Time.sleep(100, 600);
@@ -34,8 +31,7 @@ public class RecoilRing extends ZulrahTask
     }
 
     @Override
-    public boolean isBlocking()
-    {
+    public boolean isBlocking() {
         return false;
     }
 }

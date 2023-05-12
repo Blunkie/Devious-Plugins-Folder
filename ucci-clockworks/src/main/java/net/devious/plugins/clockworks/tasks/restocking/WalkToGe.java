@@ -9,31 +9,26 @@ import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.movement.Movement;
 import net.unethicalite.api.plugins.Task;
 
-public class WalkToGe extends SessionUpdater implements Task
-{
+public class WalkToGe extends SessionUpdater implements Task {
     WorldArea varrockArea = new WorldArea(3137, 3376, 153, 142, 0);
     WorldArea geArea = new WorldArea(3156, 3482, 17, 17, 0);
 
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         return !geArea.contains(LocalPlayer.get()) && varrockArea.contains(LocalPlayer.get());
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         getSession().setCurrentTask("Walk to GE");
 
-        if (!Movement.isWalking())
-        {
+        if (!Movement.isWalking()) {
             Movement.walkTo(geArea);
             return 600;
         }
 
         WorldPoint destination = Movement.getDestination();
-        if (destination != null)
-        {
+        if (destination != null) {
             Time.sleepUntil(() -> destination.distanceTo(LocalPlayer.get()) < Rand.nextInt(3, 7), 5200);
             Movement.walkTo(geArea);
         }

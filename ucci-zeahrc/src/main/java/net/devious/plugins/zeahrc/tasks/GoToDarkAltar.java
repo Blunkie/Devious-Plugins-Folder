@@ -11,11 +11,9 @@ import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.movement.Movement;
 import net.unethicalite.api.plugins.Task;
 
-public class GoToDarkAltar extends SessionUpdater implements Task
-{
+public class GoToDarkAltar extends SessionUpdater implements Task {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         TileObject darkAltar = TileObjects.getNearest(c -> c.getName().equalsIgnoreCase(Constants.DarkAltar));
 
         return Inventory.isFull()
@@ -24,12 +22,10 @@ public class GoToDarkAltar extends SessionUpdater implements Task
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         getSession().setCurrentTask("Go to dark altar");
 
-        if (Locations.DenseRunestoneCenter.distanceTo(LocalPlayer.get()) < 15)
-        {
+        if (Locations.DenseRunestoneCenter.distanceTo(LocalPlayer.get()) < 15) {
             getSession().setCurrentTask("Walking to shortcut");
 
             Movement.walkTo(Locations.SmallRocksShortcutSouthSide);
@@ -37,13 +33,11 @@ public class GoToDarkAltar extends SessionUpdater implements Task
             return 600;
         }
 
-        if (Locations.SmallRocksShortcutSouthSide.distanceTo(LocalPlayer.get()) < Locations.SmallRocksShortcutNorthSide.distanceTo(LocalPlayer.get()))
-        {
+        if (Locations.SmallRocksShortcutSouthSide.distanceTo(LocalPlayer.get()) < Locations.SmallRocksShortcutNorthSide.distanceTo(LocalPlayer.get())) {
             getSession().setCurrentTask("Climbing shortcut");
 
             TileObject rockShortcut = TileObjects.getNearest(c -> c.hasAction("Climb"));
-            if (rockShortcut != null)
-            {
+            if (rockShortcut != null) {
                 rockShortcut.interact("Climb");
                 Time.sleepUntil(() -> !LocalPlayer.get().isAnimating(), 3600);
             }

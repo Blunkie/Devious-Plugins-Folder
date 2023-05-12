@@ -15,27 +15,22 @@ import net.unethicalite.plugins.zulrah.framework.ZulrahTask;
 
 import static net.unethicalite.plugins.zulrah.UnethicalZulrahPlugin.atZulrah;
 
-public class TogglePrayers extends ZulrahTask
-{
+public class TogglePrayers extends ZulrahTask {
     private boolean enable = false;
 
     @Inject
     private UnethicalZulrahConfig config;
 
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         NPC zulrah = NPCs.getNearest(Constants.ZULRAH_NAME);
-        if (!atZulrah())
-        {
-            if (enable)
-            {
+        if (!atZulrah()) {
+            if (enable) {
                 enable = false;
             }
         }
 
-        if (getZulrahCycle() != null && !enable && !getZulrahCycle().equals(ZulrahCycle.INITIAL))
-        {
+        if (getZulrahCycle() != null && !enable && !getZulrahCycle().equals(ZulrahCycle.INITIAL)) {
             enable = true;
         }
 
@@ -46,36 +41,30 @@ public class TogglePrayers extends ZulrahTask
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         updateTask("Toggle prayers");
 
-        if (canToggleDefensive() && getZulrahCycle() != null)
-        {
+        if (canToggleDefensive() && getZulrahCycle() != null) {
             Prayer defensive = getZulrahCycle().getZulrahType().getDefensivePrayer();
             Prayers.toggle(defensive);
             Time.sleepUntil(() -> Prayers.isEnabled(defensive), 1200);
             return 300;
         }
 
-        if (canToggleOffensive() && getZulrahCycle() != null)
-        {
+        if (canToggleOffensive() && getZulrahCycle() != null) {
             Prayer offensive = getZulrahCycle().getZulrahType().getOffensivePrayer();
             Prayers.toggle(offensive);
             Time.sleepUntil(() -> Prayers.isEnabled(offensive), 1200);
             return 300;
         }
 
-        if (canTurnOffPrayer() && getZulrahCycle() != null)
-        {
-            if (Prayers.isEnabled(Prayer.PROTECT_FROM_MAGIC))
-            {
+        if (canTurnOffPrayer() && getZulrahCycle() != null) {
+            if (Prayers.isEnabled(Prayer.PROTECT_FROM_MAGIC)) {
                 Prayers.toggle(Prayer.PROTECT_FROM_MAGIC);
                 Time.sleepUntil(() -> !Prayers.isEnabled(Prayer.PROTECT_FROM_MAGIC), 1200);
             }
 
-            if (Prayers.isEnabled(Prayer.PROTECT_FROM_MISSILES))
-            {
+            if (Prayers.isEnabled(Prayer.PROTECT_FROM_MISSILES)) {
                 Prayers.toggle(Prayer.PROTECT_FROM_MISSILES);
                 Time.sleepUntil(() -> !Prayers.isEnabled(Prayer.PROTECT_FROM_MISSILES), 1200);
             }
@@ -85,8 +74,7 @@ public class TogglePrayers extends ZulrahTask
         return 100;
     }
 
-    private boolean canToggleOffensive()
-    {
+    private boolean canToggleOffensive() {
         return getZulrahCycle() != null
                 && atZulrah()
                 && Prayers.getPoints() > 0
@@ -94,13 +82,11 @@ public class TogglePrayers extends ZulrahTask
                 && !Prayers.isEnabled(getZulrahCycle().getZulrahType().getOffensivePrayer());
     }
 
-    private boolean canTurnOffPrayer()
-    {
+    private boolean canTurnOffPrayer() {
         return getZulrahCycle().isMelee();
     }
 
-    private boolean canToggleDefensive()
-    {
+    private boolean canToggleDefensive() {
         return getZulrahCycle() != null
                 && enable
                 && atZulrah()
@@ -111,8 +97,7 @@ public class TogglePrayers extends ZulrahTask
     }
 
     @Override
-    public boolean isBlocking()
-    {
+    public boolean isBlocking() {
         return false;
     }
 }

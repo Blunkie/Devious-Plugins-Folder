@@ -8,11 +8,9 @@ import net.unethicalite.plugins.zulrah.data.Constants;
 import net.unethicalite.plugins.zulrah.data.phases.ZulrahCycle;
 import net.unethicalite.plugins.zulrah.framework.ZulrahTask;
 
-public class AttackZulrah extends ZulrahTask
-{
+public class AttackZulrah extends ZulrahTask {
     @Override
-    public boolean validate()
-    {
+    public boolean validate() {
         boolean canAttack =
                 NPCs.getNearest(x -> x.getName().contains(Constants.ZULRAH_NAME) && x.getHealthRatio() != 0) != null
                         && NPCs.getNearest(Constants.ZULRAH_NAME).getAnimation() != Constants.DISAPPEAR_ANIMATION
@@ -28,13 +26,11 @@ public class AttackZulrah extends ZulrahTask
     }
 
     @Override
-    public int execute()
-    {
+    public int execute() {
         updateTask("Attacking zulrah");
 
         NPC zulrah = NPCs.getNearest(x -> x.getName().equals(Constants.ZULRAH_NAME) && x.getHealthRatio() != 0);
-        if (zulrah != null)
-        {
+        if (zulrah != null) {
             zulrah.interact("Attack");
         }
 
@@ -42,8 +38,7 @@ public class AttackZulrah extends ZulrahTask
         return 500;
     }
 
-    private boolean attackCondition()
-    {
+    private boolean attackCondition() {
         return getZulrahCycle() != ZulrahCycle.GREEN_SOUTH_E || !Players.getLocal().isMoving();
     }
 }
