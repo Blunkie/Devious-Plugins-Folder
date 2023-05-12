@@ -31,6 +31,7 @@ include("ucci-clockworks")
 include("ucci-banwatch")
 include("ucci-flaxspinner")
 include("ucci-template")
+include("oneclickthieving")
 
 for (project in rootProject.children) {
     project.apply {
