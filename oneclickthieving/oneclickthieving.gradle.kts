@@ -1,4 +1,4 @@
-version = "1.1.3"
+version = "1.1.4"
 
 project.extra["PluginName"] = "One Click Pickpocket"
 project.extra["PluginDescription"] = "QOL for pickpocketing"
